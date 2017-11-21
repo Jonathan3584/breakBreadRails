@@ -8,7 +8,6 @@ class PeopleController < ApplicationController
 	end
 	
 	def create
-		@person.user = @current_user
 		@person = Person.create(person_params)
 		render json: @person
 	end

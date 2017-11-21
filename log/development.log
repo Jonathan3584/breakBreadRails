@@ -13377,3 +13377,798 @@ Processing by PeopleController#index as HTML
 Completed 200 OK in 5ms (Views: 2.6ms | ActiveRecord: 0.6ms)
 
 
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:06:02 -0500
+  [1m[35m (12.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (6.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "aWvdbhEbDH26FpXfaSBd4RPk"], ["updated_at", "2017-11-21 01:06:03.303132"], ["id", 1]]
+  [1m[35m (6.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 111ms (Views: 0.3ms | ActiveRecord: 17.9ms)
+
+
+Started GET "/people?auth_token=aWvdbhEbDH26FpXfaSBd4RPk" for 127.0.0.1 at 2017-11-20 20:06:03 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"aWvdbhEbDH26FpXfaSBd4RPk"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "aWvdbhEbDH26FpXfaSBd4RPk"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.5ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 49ms (Views: 24.4ms | ActiveRecord: 4.1ms)
+
+
+Started GET "/people/15/restaurants" for 127.0.0.1 at 2017-11-20 20:06:07 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.6ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 15]]
+Completed 200 OK in 11ms (Views: 3.1ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/people/15/restaurants/search" for 127.0.0.1 at 2017-11-20 20:06:20 -0500
+Processing by RestaurantsController#search as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.5ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+Completed 200 OK in 2025ms (Views: 4.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:06:33 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"people"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 1ms (ActiveRecord: 0.3ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/users/validate?auth_token=aWvdbhEbDH26FpXfaSBd4RPk" for 127.0.0.1 at 2017-11-20 20:06:55 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"aWvdbhEbDH26FpXfaSBd4RPk"}
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:06:55 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"people"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "aWvdbhEbDH26FpXfaSBd4RPk"], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.6ms)
+
+
+  [1m[36mPerson Load (0.5ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 12ms (ActiveRecord: 5.2ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/users/validate?auth_token=aWvdbhEbDH26FpXfaSBd4RPk" for 127.0.0.1 at 2017-11-20 20:07:00 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"aWvdbhEbDH26FpXfaSBd4RPk"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "aWvdbhEbDH26FpXfaSBd4RPk"], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:07:22 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"params"=>{"auth_token"=>"aWvdbhEbDH26FpXfaSBd4RPk"}, "person"=>{"name"=>"Bob Jones", "address"=>"San Francisco", "relationship"=>"Some guy", "birth_date"=>"1988-05-05", "budget"=>"15"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+Filter chain halted as :require_token rendered or redirected
+Completed 401 Unauthorized in 2ms (Views: 0.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/users/validate?auth_token=aWvdbhEbDH26FpXfaSBd4RPk" for 127.0.0.1 at 2017-11-20 20:09:34 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"aWvdbhEbDH26FpXfaSBd4RPk"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "aWvdbhEbDH26FpXfaSBd4RPk"], ["LIMIT", 1]]
+Completed 200 OK in 19ms (Views: 0.2ms | ActiveRecord: 3.1ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:10:14 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"auth_token"=>"aWvdbhEbDH26FpXfaSBd4RPk", "person"=>{"name"=>"Bob Jones", "address"=>"San Francisco", "relationship"=>"Some dude", "birth_date"=>"1988-05-05", "budget"=>"15"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "aWvdbhEbDH26FpXfaSBd4RPk"], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.3ms)
+
+
+  
+NoMethodError (undefined method `user=' for nil:NilClass):
+  
+app/controllers/people_controller.rb:11:in `create'
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:10:19 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"people"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 6ms (ActiveRecord: 3.3ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:10:25 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "CzXQoZjguuLWBaR14S1sTVYA"], ["updated_at", "2017-11-21 01:10:25.274150"], ["id", 1]]
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 82ms (Views: 0.2ms | ActiveRecord: 6.6ms)
+
+
+Started GET "/people?auth_token=CzXQoZjguuLWBaR14S1sTVYA" for 127.0.0.1 at 2017-11-20 20:10:25 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"CzXQoZjguuLWBaR14S1sTVYA"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "CzXQoZjguuLWBaR14S1sTVYA"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.5ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 17ms (Views: 14.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:10:27 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"people"}
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 2ms (ActiveRecord: 0.4ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/users/validate?auth_token=CzXQoZjguuLWBaR14S1sTVYA" for 127.0.0.1 at 2017-11-20 20:10:50 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"CzXQoZjguuLWBaR14S1sTVYA"}
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:10:50 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"people"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "CzXQoZjguuLWBaR14S1sTVYA"], ["LIMIT", 1]]
+Completed 200 OK in 3ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+
+
+  [1m[36mPerson Load (0.8ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 2ms (ActiveRecord: 0.8ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:11:23 -0500
+Started GET "/users/validate?auth_token=CzXQoZjguuLWBaR14S1sTVYA" for 127.0.0.1 at 2017-11-20 20:11:23 -0500
+Processing by RestaurantsController#index as HTML
+Processing by UsersController#validate as HTML
+  Parameters: {"person_id"=>"people"}
+  Parameters: {"auth_token"=>"CzXQoZjguuLWBaR14S1sTVYA"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 2ms (ActiveRecord: 0.3ms)
+
+
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "CzXQoZjguuLWBaR14S1sTVYA"], ["LIMIT", 1]]
+  
+Completed 200 OK in 3ms (Views: 0.2ms | ActiveRecord: 1.0ms)
+
+
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:13:52 -0500
+Started GET "/users/validate?auth_token=CzXQoZjguuLWBaR14S1sTVYA" for 127.0.0.1 at 2017-11-20 20:13:52 -0500
+Processing by RestaurantsController#index as HTML
+Processing by UsersController#validate as HTML
+  Parameters: {"person_id"=>"people"}
+  Parameters: {"auth_token"=>"CzXQoZjguuLWBaR14S1sTVYA"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "CzXQoZjguuLWBaR14S1sTVYA"], ["LIMIT", 1]]
+Completed 404 Not Found in 2ms (ActiveRecord: 0.3ms)
+
+
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:14:59 -0500
+Started GET "/users/validate?auth_token=NDsVag5uvR8UY2A9DdzRC5LF" for 127.0.0.1 at 2017-11-20 20:14:59 -0500
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RestaurantsController#index as HTML
+Processing by UsersController#validate as HTML
+  Parameters: {"person_id"=>"people"}
+  Parameters: {"auth_token"=>"NDsVag5uvR8UY2A9DdzRC5LF"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "NDsVag5uvR8UY2A9DdzRC5LF"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Filter chain halted as :require_token rendered or redirected
+Completed 404 Not Found in 18ms (ActiveRecord: 4.4ms)
+
+
+Completed 401 Unauthorized in 18ms (Views: 0.3ms | ActiveRecord: 3.8ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:15:08 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "R7gV6GykjsQ3GnHb4w6cxEKq"], ["updated_at", "2017-11-21 01:15:08.463629"], ["id", 1]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 110ms (Views: 0.3ms | ActiveRecord: 17.4ms)
+
+
+Started GET "/people?auth_token=R7gV6GykjsQ3GnHb4w6cxEKq" for 127.0.0.1 at 2017-11-20 20:15:08 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"R7gV6GykjsQ3GnHb4w6cxEKq"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "R7gV6GykjsQ3GnHb4w6cxEKq"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 35ms (Views: 22.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/people/15/restaurants" for 127.0.0.1 at 2017-11-20 20:15:14 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.4ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 15]]
+Completed 200 OK in 11ms (Views: 2.7ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/people?auth_token=R7gV6GykjsQ3GnHb4w6cxEKq" for 127.0.0.1 at 2017-11-20 20:15:17 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"R7gV6GykjsQ3GnHb4w6cxEKq"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "R7gV6GykjsQ3GnHb4w6cxEKq"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 6ms (Views: 3.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/people/14/restaurants" for 127.0.0.1 at 2017-11-20 20:15:20 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"14"}
+  [1m[36mPerson Load (0.5ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.6ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 14]]
+Completed 200 OK in 17ms (Views: 11.0ms | ActiveRecord: 4.4ms)
+
+
+Started GET "/people/14/restaurants/search" for 127.0.0.1 at 2017-11-20 20:15:22 -0500
+Processing by RestaurantsController#search as HTML
+  Parameters: {"person_id"=>"14"}
+  [1m[36mPerson Load (0.5ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+Completed 200 OK in 1444ms (Views: 0.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/people/14/restaurants" for 127.0.0.1 at 2017-11-20 20:15:26 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"14"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.4ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 14]]
+Completed 200 OK in 4ms (Views: 2.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/people?auth_token=R7gV6GykjsQ3GnHb4w6cxEKq" for 127.0.0.1 at 2017-11-20 20:15:27 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"R7gV6GykjsQ3GnHb4w6cxEKq"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "R7gV6GykjsQ3GnHb4w6cxEKq"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 5ms (Views: 2.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/people/undefined/restaurants" for 127.0.0.1 at 2017-11-20 20:15:28 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"undefined"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 2ms (ActiveRecord: 0.3ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=undefined):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/users/validate?auth_token=R7gV6GykjsQ3GnHb4w6cxEKq" for 127.0.0.1 at 2017-11-20 20:18:53 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"R7gV6GykjsQ3GnHb4w6cxEKq"}
+Started GET "/people/undefined/restaurants" for 127.0.0.1 at 2017-11-20 20:18:53 -0500
+Processing by RestaurantsController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "R7gV6GykjsQ3GnHb4w6cxEKq"], ["LIMIT", 1]]
+  Parameters: {"person_id"=>"undefined"}
+Completed 200 OK in 3ms (Views: 0.2ms | ActiveRecord: 0.8ms)
+
+
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 1ms (ActiveRecord: 0.2ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=undefined):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/people/undefined/restaurants" for 127.0.0.1 at 2017-11-20 20:19:04 -0500
+Started GET "/users/validate?auth_token=R7gV6GykjsQ3GnHb4w6cxEKq" for 127.0.0.1 at 2017-11-20 20:19:04 -0500
+Processing by RestaurantsController#index as HTML
+Processing by UsersController#validate as HTML
+  Parameters: {"person_id"=>"undefined"}
+  Parameters: {"auth_token"=>"R7gV6GykjsQ3GnHb4w6cxEKq"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "R7gV6GykjsQ3GnHb4w6cxEKq"], ["LIMIT", 1]]
+Completed 404 Not Found in 1ms (ActiveRecord: 0.3ms)
+
+
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=undefined):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:19:17 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "x6GtEDhorGFGZJzfaTLHGimT"], ["updated_at", "2017-11-21 01:19:17.261199"], ["id", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 93ms (Views: 0.2ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/people?auth_token=x6GtEDhorGFGZJzfaTLHGimT" for 127.0.0.1 at 2017-11-20 20:19:17 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"x6GtEDhorGFGZJzfaTLHGimT"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "x6GtEDhorGFGZJzfaTLHGimT"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 7ms (Views: 4.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/users/validate?auth_token=x6GtEDhorGFGZJzfaTLHGimT" for 127.0.0.1 at 2017-11-20 20:19:35 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"x6GtEDhorGFGZJzfaTLHGimT"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "x6GtEDhorGFGZJzfaTLHGimT"], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/users/validate?auth_token=x6GtEDhorGFGZJzfaTLHGimT" for 127.0.0.1 at 2017-11-20 20:19:40 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"x6GtEDhorGFGZJzfaTLHGimT"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "x6GtEDhorGFGZJzfaTLHGimT"], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/validate?auth_token=x6GtEDhorGFGZJzfaTLHGimT" for 127.0.0.1 at 2017-11-20 20:21:21 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"x6GtEDhorGFGZJzfaTLHGimT"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "x6GtEDhorGFGZJzfaTLHGimT"], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:21:26 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "nayiNykgqVfohzfyjYisYUoh"], ["updated_at", "2017-11-21 01:21:26.341152"], ["id", 1]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 80ms (Views: 0.2ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/people?auth_token=nayiNykgqVfohzfyjYisYUoh" for 127.0.0.1 at 2017-11-20 20:21:26 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"nayiNykgqVfohzfyjYisYUoh"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "nayiNykgqVfohzfyjYisYUoh"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 4ms (Views: 2.2ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:21:47 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"auth_token"=>"nayiNykgqVfohzfyjYisYUoh", "person"=>{"name"=>"Bob Jones", "address"=>"San Francisco", "relationship"=>"Some dude", "birth_date"=>"1988-05-05", "budget"=>"15"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "nayiNykgqVfohzfyjYisYUoh"], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.2ms)
+
+
+  
+NoMethodError (undefined method `user=' for nil:NilClass):
+  
+app/controllers/people_controller.rb:11:in `create'
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:22:58 -0500
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["updated_at", "2017-11-21 01:22:58.720895"], ["id", 1]]
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 103ms (Views: 0.4ms | ActiveRecord: 10.2ms)
+
+
+Started GET "/people?auth_token=SVSx9bmwRk3ERBFLiKbizwB2" for 127.0.0.1 at 2017-11-20 20:22:58 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"SVSx9bmwRk3ERBFLiKbizwB2"}
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.7ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 48ms (Views: 23.2ms | ActiveRecord: 6.7ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:23:14 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"auth_token"=>"SVSx9bmwRk3ERBFLiKbizwB2", "person"=>{"name"=>"Bob Jones", "address"=>"San Francisco", "relationship"=>"Some dude", "birth_date"=>"1988-05-05", "budget"=>""}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Completed 200 OK in 10ms (Views: 0.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/people?auth_token=SVSx9bmwRk3ERBFLiKbizwB2" for 127.0.0.1 at 2017-11-20 20:23:14 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"SVSx9bmwRk3ERBFLiKbizwB2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 4ms (Views: 2.3ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:23:40 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"auth_token"=>"SVSx9bmwRk3ERBFLiKbizwB2", "person"=>{"name"=>"Bob Jones", "address"=>"San Francisco", "relationship"=>"Some dude", "birth_date"=>"1988-05-05", "budget"=>"15"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Completed 200 OK in 3ms (Views: 0.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/people?auth_token=SVSx9bmwRk3ERBFLiKbizwB2" for 127.0.0.1 at 2017-11-20 20:23:40 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"SVSx9bmwRk3ERBFLiKbizwB2"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 5ms (Views: 2.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/people" for 127.0.0.1 at 2017-11-20 20:24:26 -0500
+Processing by PeopleController#index as HTML
+Started GET "/users/validate?auth_token=SVSx9bmwRk3ERBFLiKbizwB2" for 127.0.0.1 at 2017-11-20 20:24:26 -0500
+Processing by UsersController#validate as HTML
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  Parameters: {"auth_token"=>"SVSx9bmwRk3ERBFLiKbizwB2"}
+Filter chain halted as :require_token rendered or redirected
+Completed 401 Unauthorized in 5ms (Views: 0.2ms | ActiveRecord: 1.9ms)
+
+
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["LIMIT", 1]]
+Completed 200 OK in 13ms (Views: 0.2ms | ActiveRecord: 5.8ms)
+
+
+Started GET "/people" for 127.0.0.1 at 2017-11-20 20:25:16 -0500
+Processing by PeopleController#index as HTML
+Started GET "/users/validate?auth_token=SVSx9bmwRk3ERBFLiKbizwB2" for 127.0.0.1 at 2017-11-20 20:25:16 -0500
+Processing by UsersController#validate as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  Parameters: {"auth_token"=>"SVSx9bmwRk3ERBFLiKbizwB2"}
+Filter chain halted as :require_token rendered or redirected
+Completed 401 Unauthorized in 3ms (Views: 0.2ms | ActiveRecord: 1.0ms)
+
+
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "SVSx9bmwRk3ERBFLiKbizwB2"], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:25:26 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "LnVPR6nZ7wffMb17iVjLDWKr"], ["updated_at", "2017-11-21 01:25:26.982043"], ["id", 1]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 77ms (Views: 0.2ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/people?auth_token=LnVPR6nZ7wffMb17iVjLDWKr" for 127.0.0.1 at 2017-11-20 20:25:26 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"LnVPR6nZ7wffMb17iVjLDWKr"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "LnVPR6nZ7wffMb17iVjLDWKr"], ["LIMIT", 1]]
+  [1m[36mPerson Load (1.3ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 6ms (Views: 3.2ms | ActiveRecord: 1.7ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:25:46 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"auth_token"=>"LnVPR6nZ7wffMb17iVjLDWKr", "person"=>{}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "LnVPR6nZ7wffMb17iVjLDWKr"], ["LIMIT", 1]]
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.2ms)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: person):
+  
+app/controllers/people_controller.rb:36:in `person_params'
+app/controllers/people_controller.rb:11:in `create'
+Started GET "/users/validate?auth_token=LnVPR6nZ7wffMb17iVjLDWKr" for 127.0.0.1 at 2017-11-20 20:26:46 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"LnVPR6nZ7wffMb17iVjLDWKr"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "LnVPR6nZ7wffMb17iVjLDWKr"], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/users/validate?auth_token=LnVPR6nZ7wffMb17iVjLDWKr" for 127.0.0.1 at 2017-11-20 20:27:10 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"LnVPR6nZ7wffMb17iVjLDWKr"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "LnVPR6nZ7wffMb17iVjLDWKr"], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:27:21 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "3WtgQZsf5RVBvJz3AdnD3oS2"], ["updated_at", "2017-11-21 01:27:21.490164"], ["id", 1]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 74ms (Views: 0.2ms | ActiveRecord: 3.4ms)
+
+
+Started GET "/people?auth_token=3WtgQZsf5RVBvJz3AdnD3oS2" for 127.0.0.1 at 2017-11-20 20:27:21 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"3WtgQZsf5RVBvJz3AdnD3oS2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "3WtgQZsf5RVBvJz3AdnD3oS2"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.6ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 6ms (Views: 3.4ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:27:41 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"auth_token"=>"3WtgQZsf5RVBvJz3AdnD3oS2", "person"=>{"name"=>"Bob Jones", "address"=>"San Francisco", "relationship"=>"Some dude", "birth_date"=>"1988-05-05", "budget"=>"15", "user_id"=>1}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "3WtgQZsf5RVBvJz3AdnD3oS2"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "people" ("name", "address", "relationship", "birth_date", "user_id", "created_at", "updated_at", "budget") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Bob Jones"], ["address", "San Francisco"], ["relationship", "Some dude"], ["birth_date", "1988-05-05"], ["user_id", 1], ["created_at", "2017-11-21 01:27:41.683076"], ["updated_at", "2017-11-21 01:27:41.683076"], ["budget", 15]]
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 13ms (Views: 0.4ms | ActiveRecord: 6.8ms)
+
+
+Started GET "/people?auth_token=3WtgQZsf5RVBvJz3AdnD3oS2" for 127.0.0.1 at 2017-11-20 20:27:41 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"3WtgQZsf5RVBvJz3AdnD3oS2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "3WtgQZsf5RVBvJz3AdnD3oS2"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 6ms (Views: 4.1ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/people/" for 127.0.0.1 at 2017-11-20 20:29:22 -0500
+Processing by PeopleController#create as HTML
+  Parameters: {"auth_token"=>"3WtgQZsf5RVBvJz3AdnD3oS2", "person"=>{"name"=>"Hera Archer", "address"=>"81 Pilling St Brooklyn NY 11207", "relationship"=>"Dog", "birth_date"=>"2014-02-14", "budget"=>"150", "user_id"=>1}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "3WtgQZsf5RVBvJz3AdnD3oS2"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "people" ("name", "address", "relationship", "birth_date", "user_id", "created_at", "updated_at", "budget") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Hera Archer"], ["address", "81 Pilling St Brooklyn NY 11207"], ["relationship", "Dog"], ["birth_date", "2014-02-14"], ["user_id", 1], ["created_at", "2017-11-21 01:29:22.212966"], ["updated_at", "2017-11-21 01:29:22.212966"], ["budget", 150]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 11ms (Views: 0.6ms | ActiveRecord: 6.5ms)
+
+
+Started GET "/people?auth_token=3WtgQZsf5RVBvJz3AdnD3oS2" for 127.0.0.1 at 2017-11-20 20:29:22 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"3WtgQZsf5RVBvJz3AdnD3oS2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "3WtgQZsf5RVBvJz3AdnD3oS2"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 4ms (Views: 2.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/people/14/restaurants" for 127.0.0.1 at 2017-11-20 20:30:05 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"14"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 14]]
+Completed 200 OK in 20ms (Views: 11.3ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/people/14/restaurants/search" for 127.0.0.1 at 2017-11-20 20:30:11 -0500
+Processing by RestaurantsController#search as HTML
+  Parameters: {"person_id"=>"14"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+Completed 200 OK in 1152ms (Views: 0.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:30:21 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"people"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 1ms (ActiveRecord: 0.3ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/people" for 127.0.0.1 at 2017-11-20 20:30:25 -0500
+Processing by PeopleController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+Filter chain halted as :require_token rendered or redirected
+Completed 401 Unauthorized in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/validate?auth_token=3WtgQZsf5RVBvJz3AdnD3oS2" for 127.0.0.1 at 2017-11-20 20:30:25 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"3WtgQZsf5RVBvJz3AdnD3oS2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "3WtgQZsf5RVBvJz3AdnD3oS2"], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:30:35 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 75ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:30:41 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "YecjtGR7MUhB41k23nEZpmDU"], ["updated_at", "2017-11-21 01:30:41.629354"], ["id", 1]]
+  [1m[35m (6.3ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 84ms (Views: 0.2ms | ActiveRecord: 7.1ms)
+
+
+Started GET "/people?auth_token=YecjtGR7MUhB41k23nEZpmDU" for 127.0.0.1 at 2017-11-20 20:30:41 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"YecjtGR7MUhB41k23nEZpmDU"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "YecjtGR7MUhB41k23nEZpmDU"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.5ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 7ms (Views: 4.3ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/people/16/restaurants" for 127.0.0.1 at 2017-11-20 20:30:45 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"16"}
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.4ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 16]]
+Completed 200 OK in 4ms (Views: 1.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/people/16/restaurants/search" for 127.0.0.1 at 2017-11-20 20:30:48 -0500
+Processing by RestaurantsController#search as HTML
+  Parameters: {"person_id"=>"16"}
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+Completed 200 OK in 842ms (Views: 0.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/validate?auth_token=YecjtGR7MUhB41k23nEZpmDU" for 127.0.0.1 at 2017-11-20 20:30:54 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"YecjtGR7MUhB41k23nEZpmDU"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "YecjtGR7MUhB41k23nEZpmDU"], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/people" for 127.0.0.1 at 2017-11-20 20:30:54 -0500
+Processing by PeopleController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+Filter chain halted as :require_token rendered or redirected
+Completed 401 Unauthorized in 2ms (Views: 0.1ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2017-11-20 20:31:08 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]", "session"=>{"email"=>"jonathan.ellsaesser@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 AND ("users"."id" != $2) LIMIT $3[0m  [["email", "jonathan.ellsaesser@gmail.com"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "auth_token" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["auth_token", "saWmBLdE6tFUSUBrzWrBhFJE"], ["updated_at", "2017-11-21 01:31:08.635526"], ["id", 1]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 78ms (Views: 0.2ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/people?auth_token=saWmBLdE6tFUSUBrzWrBhFJE" for 127.0.0.1 at 2017-11-20 20:31:08 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"saWmBLdE6tFUSUBrzWrBhFJE"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "saWmBLdE6tFUSUBrzWrBhFJE"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 8ms (Views: 5.0ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/people/15/restaurants" for 127.0.0.1 at 2017-11-20 20:31:16 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 15]]
+Completed 200 OK in 4ms (Views: 1.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/people/15/restaurants/search" for 127.0.0.1 at 2017-11-20 20:31:19 -0500
+Processing by RestaurantsController#search as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+Completed 200 OK in 2257ms (Views: 1.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/people/15/restaurants" for 127.0.0.1 at 2017-11-20 20:31:40 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.4ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 15]]
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/people/15/restaurants/" for 127.0.0.1 at 2017-11-20 20:31:40 -0500
+Processing by RestaurantsController#create as HTML
+  Parameters: {"restaurant"=>{"name"=>"Lucha Lucha", "rating"=>9.1, "url"=>nil, "photo"=>"https://ss3.4sqi.net/img/categories_v2/food/mexican_.png", "category"=>"Mexican Restaurant", "person_id"=>"15"}, "person_id"=>"15"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerson Load (0.6ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "restaurants" ("name", "category", "rating", "photo", "person_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "Lucha Lucha"], ["category", "Mexican Restaurant"], ["rating", 9.1], ["photo", "https://ss3.4sqi.net/img/categories_v2/food/mexican_.png"], ["person_id", 15], ["created_at", "2017-11-21 01:31:40.452729"], ["updated_at", "2017-11-21 01:31:40.452729"]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 13ms (Views: 0.7ms | ActiveRecord: 7.0ms)
+
+
+Started GET "/people/15/restaurants/search" for 127.0.0.1 at 2017-11-20 20:31:47 -0500
+Processing by RestaurantsController#search as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+Completed 200 OK in 1527ms (Views: 1.3ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/people/15/restaurants/" for 127.0.0.1 at 2017-11-20 20:31:56 -0500
+Processing by RestaurantsController#create as HTML
+  Parameters: {"restaurant"=>{"name"=>"Taquerias Kermes", "rating"=>8.8, "url"=>nil, "photo"=>"https://ss3.4sqi.net/img/categories_v2/food/mexican_.png", "category"=>"Mexican Restaurant", "person_id"=>"15"}, "person_id"=>"15"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("name", "category", "rating", "photo", "person_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "Taquerias Kermes"], ["category", "Mexican Restaurant"], ["rating", 8.8], ["photo", "https://ss3.4sqi.net/img/categories_v2/food/mexican_.png"], ["person_id", 15], ["created_at", "2017-11-21 01:31:56.729148"], ["updated_at", "2017-11-21 01:31:56.729148"]]
+  [1m[35m (5.9ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 15ms (Views: 0.6ms | ActiveRecord: 6.9ms)
+
+
+Started GET "/people/15/restaurants" for 127.0.0.1 at 2017-11-20 20:31:56 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"15"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.4ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 15]]
+Completed 200 OK in 6ms (Views: 3.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/people?auth_token=saWmBLdE6tFUSUBrzWrBhFJE" for 127.0.0.1 at 2017-11-20 20:32:18 -0500
+Processing by PeopleController#index as HTML
+  Parameters: {"auth_token"=>"saWmBLdE6tFUSUBrzWrBhFJE"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "saWmBLdE6tFUSUBrzWrBhFJE"], ["LIMIT", 1]]
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT "people".* FROM "people" WHERE "people"."user_id" = $1[0m  [["user_id", 1]]
+Completed 200 OK in 4ms (Views: 2.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/people/16/restaurants" for 127.0.0.1 at 2017-11-20 20:32:20 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"16"}
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRestaurant Load (0.4ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."person_id" = $1[0m  [["person_id", 16]]
+Completed 200 OK in 4ms (Views: 1.3ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/people/16/restaurants/search" for 127.0.0.1 at 2017-11-20 20:32:23 -0500
+Processing by RestaurantsController#search as HTML
+  Parameters: {"person_id"=>"16"}
+  [1m[36mPerson Load (0.3ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+Completed 200 OK in 1487ms (Views: 0.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/people/people/restaurants" for 127.0.0.1 at 2017-11-20 20:32:34 -0500
+Processing by RestaurantsController#index as HTML
+  Parameters: {"person_id"=>"people"}
+  [1m[36mPerson Load (0.2ms)[0m  [1m[34mSELECT  "people".* FROM "people" WHERE "people"."id" = $1 LIMIT $2[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 1ms (ActiveRecord: 0.2ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Person with 'id'=people):
+  
+app/controllers/restaurants_controller.rb:72:in `set_person'
+Started GET "/users/validate?auth_token=saWmBLdE6tFUSUBrzWrBhFJE" for 127.0.0.1 at 2017-11-20 20:32:43 -0500
+Processing by UsersController#validate as HTML
+  Parameters: {"auth_token"=>"saWmBLdE6tFUSUBrzWrBhFJE"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."auth_token" = $1 LIMIT $2[0m  [["auth_token", "saWmBLdE6tFUSUBrzWrBhFJE"], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
